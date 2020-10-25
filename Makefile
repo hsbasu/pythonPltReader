@@ -13,7 +13,7 @@ PYFLAGS=#-m pydoc -w
 all: run
 # 
 run:
-	${PY3} ${PYFLAGS} plt_reader_test.py
+	${PY3} ${PYFLAGS} main.py
 clean:
 	@echo "Cleaning up..."
 	rm -Rf __pycache__ *.html log
