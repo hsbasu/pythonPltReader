@@ -1,6 +1,6 @@
 import pyPLTreader
 
-datafile = open("phase1000000.plt", "rb")
+datafile = open("2d_sample_data.plt", "rb")
 
 #class read_tecplot_data(datafile):
 def test_read_data(data):
