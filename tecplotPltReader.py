@@ -200,8 +200,8 @@ def find_zones(byte_list, eo_header):
         next_byte = (counter + 1) * 4
         zone_marker = construct.Float32l.parse(byte_list[first_byte:next_byte])
         if zone_marker == 299.0:
-            print('Zone Found')
-            print(first_byte)
+            # print('Zone Found')
+            # print(first_byte)
             zone_makers.append(first_byte)
         counter = counter + 1
 
@@ -249,7 +249,7 @@ def read_header(byte_list):
     end_of_header = find_end_of_header(byte_list[start:])
     end_of_header_abs = end_of_header + start
 
-    zone_markers= find_zones(byte_list[start:], end_of_header)
+    zone_markers = find_zones(byte_list[start:], end_of_header)
 
     zones=list()
     for zone in zone_markers:
@@ -292,7 +292,7 @@ def find_zones_data(byte_list, num_zones, offset):
 def read_zones(byte_list, zone_markers, header, binary_file):
     var_names = header['VarNames']
     var_dict = {}
-    zone_vars = list()
+    # zone_vars = list()
     start_byte = 0
     zone_counter = 0
     zones_list=[]
@@ -356,8 +356,8 @@ def read_zones(byte_list, zone_markers, header, binary_file):
             max_val[var_with_min_max] = construct.Float64l.parse(byte_list[start_byte:end_byte])
             start_byte = end_byte
 
-        print('start_data_list')
-        print(start_byte)
+        # print('start_data_list')
+        # print(start_byte)
 
         zone_data['Min_Vals'] = min_val
         zone_data['Max_Vals'] = max_val
@@ -365,26 +365,20 @@ def read_zones(byte_list, zone_markers, header, binary_file):
         Imax = header['Zones'][zone_counter]['Imax']
         Jmax = header['Zones'][zone_counter]['Jmax']
         Kmax = header['Zones'][zone_counter]['Kmax']
-        print('Imax in read Zone')
-        print(Imax)
+
         binary_file.seek(0)
-        print('NumValuesPerVariable')
-        print(Imax * Jmax * Kmax)
-
-
-
 
         for name in var_names:
-            print('StartByte')
-            print(start_byte)
+            # print('StartByte')
+            # print(start_byte)
             data = np.frombuffer(byte_list, dtype='float32',
                                       count=Imax * Jmax * Kmax,
                                       offset=start_byte)
             start_byte = start_byte + 4 * Imax * Jmax * Kmax
             zone_data[name] = data
 
-            #var_data=list()
-            #for I in range(0, Imax):
+            # var_data=list()
+            # for I in range(0, Imax):
             #    for J in range(0, Jmax):
             #        for K in range(0, Kmax):
             #            end_byte = start_byte + 4
@@ -409,8 +403,8 @@ def read_zones(byte_list, zone_markers, header, binary_file):
 
         zones_list.append(zone_data)
 
-        print('start_data_list')
-        print(start_byte)
+        # print('start_data_list')
+        # print(start_byte)
         zone_counter = zone_counter + 1
 
     return zones_list
@@ -419,16 +413,27 @@ def read_zones(byte_list, zone_markers, header, binary_file):
 def read_data(byte_list, header, binary_file):
     eo_header = header['EofHeader']
     num_zones = len(header['ZoneMarkers'])
+    var_names = header['VarNames']
+    # Imax = header['Zones'][zone_counter]['Imax']
+    # Jmax = header['Zones'][zone_counter]['Jmax']
+    # Kmax = header['Zones'][zone_counter]['Kmax']
+    # print('Imax in read Zone')
+    # print(Imax)
+    # print('Jmax in read Zone')
+    # print(Jmax)
+    # print('Kmax in read Zone')
+    # print(Kmax)
+    # print('NumValuesPerVariable')
+    # print(Imax * Jmax * Kmax)
     zone_markers = find_zones_data(byte_list[eo_header:], num_zones, eo_header)
 
     zones_list = read_zones(byte_list, zone_markers, header, binary_file)
 
-
-    print('len_byte_list')
-    print(len(byte_list))
-
+    # print('len_byte_list')
+    # print(len(byte_list))
 
     return {'ZoneMarkers':zone_markers,
+            'Var_names':var_names,
             'Zones':zones_list}
 
 
