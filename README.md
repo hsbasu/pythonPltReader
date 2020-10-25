@@ -1,1 +1,3 @@
-Should deliver a interface for a tecplot binary file for python.
+# Python PLT Reader
+
+Python PLT Reader reads binary .plt files 
