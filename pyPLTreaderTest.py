@@ -2,7 +2,7 @@ import unittest
 import pyPLTreader
 import construct
 
-data = open("phase1000000.plt", "rb")
+data = open("test_data.plt", "rb")
 
 str=data.read()
 
@@ -39,7 +39,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(mag_res['ByteOrder'], 1)
         self.assertEqual(mag_res['FileType'], 'FULL')
         self.assertEqual(mag_res['NumVars'], 3)
-        self.assertEqual(mag_res['Title'], '...')
+        self.assertEqual(mag_res['Title'], '')
 
 
 if __name__ == '__main__':
