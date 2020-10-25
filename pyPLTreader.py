@@ -355,6 +355,7 @@ def read_zones(byte_list, zone_markers, header, binary_file):
 		Imax = header['Zones'][zone_counter]['Imax']
 		Jmax = header['Zones'][zone_counter]['Jmax']
 		Kmax = header['Zones'][zone_counter]['Kmax']
+		zone_data['Indices'] = [Imax, Jmax, Kmax]
 
 		binary_file.seek(0)
 
@@ -402,17 +403,6 @@ def read_data(byte_list, header, binary_file):
 	eo_header = header['EofHeader']
 	num_zones = len(header['ZoneMarkers'])
 	var_names = header['VarNames']
-	# Imax = header['Zones'][zone_counter]['Imax']
-	# Jmax = header['Zones'][zone_counter]['Jmax']
-	# Kmax = header['Zones'][zone_counter]['Kmax']
-	# print('Imax in read Zone')
-	# print(Imax)
-	# print('Jmax in read Zone')
-	# print(Jmax)
-	# print('Kmax in read Zone')
-	# print(Kmax)
-	# print('NumValuesPerVariable')
-	# print(Imax * Jmax * Kmax)
 	zone_markers = find_zones_data(byte_list[eo_header:], num_zones, eo_header)
 
 	zones_list = read_zones(byte_list, zone_markers, header, binary_file)
