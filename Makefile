@@ -2,11 +2,12 @@
 #
 # # *****************************************************
 # # Parameters to control Makefile operation
+# MAINCODE = pyPLTreader
 MAINCODE = main
 
-PYTHON=@python
-PY3=@python3
-PYFLAGS=-m pydoc -w 
+PYTHON = @python
+PY3 = @python3
+PYFLAGS = -m pydoc -w
 # 
 # #special phony target, ".PHONY" contain all "targets"
 .PHONY: all clean

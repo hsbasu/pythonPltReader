@@ -1,3 +1,5 @@
+# Python module to read binary .plt files.
+
 import construct
 import numpy as np
 
@@ -12,8 +14,13 @@ def read_tec_str(byte_list):
 
 
 def construct_qword(byte_list):
+
+	"""
+	Reads first 8 unicode characters in the binary file.
+	"""
+
 	if len(byte_list) < 8:
-		return  {'Correct':False}
+		return {'Correct':False}
 	qword=0
 	uni_chars=''
 
@@ -36,6 +43,15 @@ def construct_qword(byte_list):
 
 
 def read_magic_number(byte_list):
+
+	"""
+	Creates a python dictionary with
+	first 8 unicode characters in the file.
+	The first 8 unicode characters are called
+	magic number and contain version of "preplot"
+	used to create the binary file.
+	"""
+
 	if len(byte_list) < 8:
 		return {'Correct':False}
 	magic_num = construct_qword(byte_list[0:8])
@@ -170,7 +186,7 @@ def parse_zone(byte_list, num_vars):
 		byte_end = byte_end + 4
 		zone['Kmax'] = construct.Int32ul.parse(
 			byte_list[byte_start:byte_end])
-
+	
 	byte_start = byte_start + 4
 	byte_end = byte_end + 4
 	zone['AuxdataNamePair'] = construct.Int32ul.parse(
@@ -187,7 +203,7 @@ def find_zones(byte_list, eo_header):
 		if first_byte >= eo_header:
 			end_of_header = True
 			continue
-
+		
 		next_byte = (counter + 1) * 4
 		zone_marker = construct.Float32l.parse(byte_list[first_byte:next_byte])
 		if zone_marker == 299.0:
@@ -214,6 +230,11 @@ def find_end_of_header(byte_list):
 
 
 def read_header(byte_list):
+
+	"""
+	Reads the "Header" block of the binary file.
+	"""
+
 	file_type_name=['FULL','GRID','SOLUTION']
 
 	magic_num = read_magic_number(byte_list[0:8])
@@ -246,7 +267,7 @@ def read_header(byte_list):
 		zones.append(parse_zone(byte_list[start+zone:], var_names))
 
 	# Now find and read zones
-	#zones = find_zones(byte_list[next_byte+start:])
+	# zones = find_zones(byte_list[next_byte+start:])
 
 	return {'Correct': True,
 			'magic_num' : magic_num,
@@ -399,20 +420,32 @@ def read_zones(byte_list, zone_markers, header, binary_file):
 	return zones_list
 
 
-def read_data(byte_list, header, binary_file):
-	eo_header = header['EofHeader']
-	num_zones = len(header['ZoneMarkers'])
-	var_names = header['VarNames']
+def read_data(binary_pltfile):
+	
+	"""
+	This function takes the .plt datafile as input argument.
+	A .plt file contains BINARY data in three blocks: "Header",
+	"End-Of-Header-Marker" and "Data".
+	This function first calls the function 'read_header()' to read
+	the "Header" block.
+	It returns all the information found in .plt via dictionary 'found_data'
+	"""
+	
+	byte_list = binary_pltfile.read()
+	header = read_header(byte_list)
+	
+	eo_header = header['EofHeader']  # End-Of-Header-Marker
+	num_zones = len(header['ZoneMarkers'])  # Number of zones
+	var_names = header['VarNames']  # Name of the variables found
 	zone_markers = find_zones_data(byte_list[eo_header:], num_zones, eo_header)
 
-	zones_list = read_zones(byte_list, zone_markers, header, binary_file)
+	zones_list = read_zones(byte_list, zone_markers, header, binary_pltfile)
 
-	# print('len_byte_list')
-	# print(len(byte_list))
+	found_data = {'ZoneMarkers':zone_markers, 'Var_names':var_names, 'Zones':zones_list}
 
-	return {'ZoneMarkers':zone_markers,
-			'Var_names':var_names,
-			'Zones':zones_list}
+	return found_data
 
 
-
+if __name__ == "__main__":
+	print("Please provide the .plt file.")
+	help(read_data)
