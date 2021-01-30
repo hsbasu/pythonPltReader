@@ -19,4 +19,4 @@ run:
 	${PY3} ${PYFLAGS} ${MAINCODE}
 clean:
 	@echo "Cleaning up..."
-	rm -Rf __pycache__ *.html log
+	rm -Rf __pycache__ *.pyc *.html log
