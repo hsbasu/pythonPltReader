@@ -2,7 +2,7 @@ import unittest
 import pyPLTreader
 import construct
 
-data = open("test_data.plt", "rb")
+data = open("1d_sample_data.plt", "rb")
 
 str=data.read()
 

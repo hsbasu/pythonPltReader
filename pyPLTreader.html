@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module pyPLTreader</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>pyPLTreader</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/himadri/mycodes/git-repos/pythonPltReader/pyPLTreader.py">/home/himadri/mycodes/git-repos/pythonPltReader/pyPLTreader.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Python&nbsp;module&nbsp;to&nbsp;read&nbsp;binary&nbsp;.plt&nbsp;files.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="construct.html">construct</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-construct_qword"><strong>construct_qword</strong></a>(byte_list)</dt><dd><tt>Reads&nbsp;first&nbsp;8&nbsp;unicode&nbsp;characters&nbsp;in&nbsp;the&nbsp;binary&nbsp;file.</tt></dd></dl>
+ <dl><dt><a name="-find_end_of_header"><strong>find_end_of_header</strong></a>(byte_list)</dt></dl>
+ <dl><dt><a name="-find_zones"><strong>find_zones</strong></a>(byte_list, eo_header)</dt></dl>
+ <dl><dt><a name="-find_zones_data"><strong>find_zones_data</strong></a>(byte_list, num_zones, offset)</dt></dl>
+ <dl><dt><a name="-get_title"><strong>get_title</strong></a>(byte_list, offset=0)</dt></dl>
+ <dl><dt><a name="-parse_zone"><strong>parse_zone</strong></a>(byte_list, num_vars)</dt></dl>
+ <dl><dt><a name="-read_data"><strong>read_data</strong></a>(binary_pltfile)</dt><dd><tt>This&nbsp;function&nbsp;takes&nbsp;the&nbsp;.plt&nbsp;datafile&nbsp;as&nbsp;input&nbsp;argument.<br>
+A&nbsp;.plt&nbsp;file&nbsp;contains&nbsp;BINARY&nbsp;data&nbsp;in&nbsp;three&nbsp;blocks:&nbsp;"Header",<br>
+"End-Of-Header-Marker"&nbsp;and&nbsp;"Data".<br>
+This&nbsp;function&nbsp;first&nbsp;calls&nbsp;the&nbsp;function&nbsp;'<a href="#-read_header">read_header</a>()'&nbsp;to&nbsp;read<br>
+the&nbsp;"Header"&nbsp;block.<br>
+It&nbsp;returns&nbsp;all&nbsp;the&nbsp;information&nbsp;found&nbsp;in&nbsp;.plt&nbsp;via&nbsp;dictionary&nbsp;'found_data'</tt></dd></dl>
+ <dl><dt><a name="-read_header"><strong>read_header</strong></a>(byte_list)</dt><dd><tt>Reads&nbsp;the&nbsp;"Header"&nbsp;block&nbsp;of&nbsp;the&nbsp;binary&nbsp;file.</tt></dd></dl>
+ <dl><dt><a name="-read_magic_number"><strong>read_magic_number</strong></a>(byte_list)</dt><dd><tt>Creates&nbsp;a&nbsp;python&nbsp;dictionary&nbsp;with<br>
+first&nbsp;8&nbsp;unicode&nbsp;characters&nbsp;in&nbsp;the&nbsp;file.<br>
+The&nbsp;first&nbsp;8&nbsp;unicode&nbsp;characters&nbsp;are&nbsp;called<br>
+magic&nbsp;number&nbsp;and&nbsp;contain&nbsp;version&nbsp;of&nbsp;"preplot"<br>
+used&nbsp;to&nbsp;create&nbsp;the&nbsp;binary&nbsp;file.</tt></dd></dl>
+ <dl><dt><a name="-read_tec_str"><strong>read_tec_str</strong></a>(byte_list)</dt></dl>
+ <dl><dt><a name="-read_var_names"><strong>read_var_names</strong></a>(byte_list, num_vars)</dt></dl>
+ <dl><dt><a name="-read_zones"><strong>read_zones</strong></a>(byte_list, zone_markers, header, binary_file)</dt></dl>
+</td></tr></table>
+</body></html>
